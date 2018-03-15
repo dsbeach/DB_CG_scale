@@ -4,7 +4,7 @@ int MainHandler::handle(int button, I2C_LCD lcd, HX711 *frontCell, HX711 *rearCe
 
   static MovingAverage avgFront(CELL_SAMPLE_ITERATIONS);
   static MovingAverage avgRear(CELL_SAMPLE_ITERATIONS);
-  static unsigned long lastSwitch = 0ul;
+  static unsigned long lastSwitch = millis();
   static bool showGrams = true;
 
   if (status == WAITING)
@@ -40,10 +40,21 @@ int MainHandler::handle(int button, I2C_LCD lcd, HX711 *frontCell, HX711 *rearCe
   float totalForce = (frontUnits * eepromValues->pegDistance)  + (rearUnits *  (eepromValues->pegDistance + eepromValues->spanDistance));
   float cg = totalForce / totalWeight;
 
-  unsigned long now = millis();
-  if ((now - lastSwitch) > 5000ul) {
-    showGrams = !showGrams;
-    lastSwitch = now;
+  // grams or ounces?
+  switch (eepromValues->gramsOuncesOption) {
+    case 0:
+      showGrams = true;
+      break;
+    case 1:
+      showGrams = false;
+      break;
+    case 2:
+      unsigned long now = millis();
+      if ((now - lastSwitch) > 5000ul) {
+        showGrams = !showGrams;
+        lastSwitch = now;
+      }
+      break;
   }
   
   if (showGrams == true) // showing grams

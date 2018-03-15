@@ -8,7 +8,7 @@
 #define CALIBRATION_WEIGHT_ADDRESS 8
 #define SPAN_DISTANCE_ADDRESS 12
 #define PEG_DISTANCE_ADDRESS 16
-#define GRAMS_OUNCES_FACTOR_ADDRESS 20
+#define GRAMS_OUNCES_OPTION_ADDRESS 20
 
 struct EepromValues {
   float frontScale;
@@ -16,7 +16,7 @@ struct EepromValues {
   float calibrationWeight;
   float spanDistance; // distance between pivot points
   float pegDistance; // leading edge peg to first pivot point
-  float gramsOuncesFactor;
+  uint32_t gramsOuncesOption;
 };
 
 #include "DB_CG_scale.h"

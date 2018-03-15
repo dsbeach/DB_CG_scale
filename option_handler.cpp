@@ -62,16 +62,20 @@ int OptionHandler::handle(int button, I2C_LCD lcd, HX711 *frontCell, HX711 *rear
       break;
     // set units of measure
     case 7:
-      lcd.printrow(0, "Btn 1 = Grams");
-      lcd.printrow(1, "Btn 2 = Ounces");
+      lcd.printrow(0, "Btn 1 g Btn 2 oz");
+      lcd.printrow(1, "Btn 3 = both");
       switch (button)
       {
         case BUTTON1:
-          eepromValues->gramsOuncesFactor = 1;
+          eepromValues->gramsOuncesOption = 0;
           step++;
           break;
         case BUTTON2:
-          eepromValues->gramsOuncesFactor = 0.035274;
+          eepromValues->gramsOuncesOption = 1;
+          step++;
+          break;
+        case BUTTON3:
+          eepromValues->gramsOuncesOption = 2;
           step++;
           break;
       }
