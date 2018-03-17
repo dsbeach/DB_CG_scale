@@ -13,6 +13,8 @@ This code and downloadable 3D printed parts were inspired by aaromalila's CG-sca
  
  
 ## Initial BETA code is posted - try it at your own risk
+
+Refer to the project's wiki page at [https://github.com/dsbeach/DB_CG_scale/wiki](https://github.com/dsbeach/DB_CG_scale/wiki) for more detailed information.
  
  
  
