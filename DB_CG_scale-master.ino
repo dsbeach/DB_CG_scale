@@ -1,8 +1,8 @@
-#include "DB_CG_scale.h"
+#include "DB_CG_scale-master.h"
 
 #define DEBUG true
 
-I2C_LCD lcd;
+I2C_LCD *lcd;
 HX711 frontCell(FRONT_CELL_DOUT, FRONT_CELL_SCK);  
 HX711 rearCell(REAR_CELL_DOUT, REAR_CELL_SCK); 
 int handlerIndex;
@@ -22,11 +22,24 @@ void setup() {
     Serial.println("DEBUG is active!");
   }
 
-  lcd.init();
+  Wire.begin();
+  int lcdAddresses[2] = {0x27, 0x3f};
+  for (int i = 0; i < (sizeof(lcdAddresses)/sizeof(int)); i++)
+  {
+    Wire.beginTransmission(lcdAddresses[i]);
+    int error = Wire.endTransmission(); // see if the device acknowledges the request
+    if (error == 0)
+    {
+      lcd = new I2C_LCD(lcdAddresses[i]);
+    }
+  }
+  Wire.end();
+  
+  lcd->init();
   Button::init();
   
-  lcd.printrow(0,"DB_CG_Scale v0.0");
-  lcd.printrow(1, "Zero front...");
+  lcd->printrow(0,"DB_CG_Scale v0.0");
+  lcd->printrow(1, "Zero front...");
   
   eepromValues = Eeprom::getValues();
   frontCell.set_scale(eepromValues.frontScale);
@@ -35,7 +48,7 @@ void setup() {
   handlerIndex = MAIN_ID;
 
   frontCell.tare(CELL_SAMPLE_ITERATIONS);
-  lcd.printrow(1, "Zero rear...");
+  lcd->printrow(1, "Zero rear...");
   rearCell.tare(CELL_SAMPLE_ITERATIONS);
 }
 

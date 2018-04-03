@@ -1,4 +1,4 @@
-#include "DB_CG_scale.h"
+#include "DB_CG_scale-master.h"
 
 void changeValue(int button,float *value, float adj)
 {
@@ -13,7 +13,7 @@ void changeValue(int button,float *value, float adj)
   }
 }
 
-int OptionHandler::handle(int button, I2C_LCD lcd, HX711 *frontCell, HX711 *rearCell, EepromValues *eepromValues) {
+int OptionHandler::handle(int button, I2C_LCD *lcd, HX711 *frontCell, HX711 *rearCell, EepromValues *eepromValues) {
   static int step = 0;
     
   if (status == WAITING)
@@ -23,37 +23,37 @@ int OptionHandler::handle(int button, I2C_LCD lcd, HX711 *frontCell, HX711 *rear
   }
   switch (step) {
     case 0:
-      lcd.printrow(0, "Change options?");
-      lcd.printrow(1, "Btn 1 = Yes");
+      lcd->printrow(0, "Change options?");
+      lcd->printrow(1, "Btn 1 = Yes");
       if ((button == BUTTON2) || (button == BUTTON3)) {
           status = WAITING;
           return MAIN_ID;
       }
       break;
     case 1:
-      lcd.printrow(0, "Span Dist. 1's");
-      lcd.printrow(1, String(eepromValues->spanDistance,1));
+      lcd->printrow(0, "Span Dist. 1's");
+      lcd->printrow(1, String(eepromValues->spanDistance,1));
       changeValue(button, &eepromValues->spanDistance, 1.0);
       break;
     case 2:
-      lcd.printrow(0, "Span Dist. .1's");
-      lcd.printrow(1, String(eepromValues->spanDistance,1));
+      lcd->printrow(0, "Span Dist. .1's");
+      lcd->printrow(1, String(eepromValues->spanDistance,1));
       changeValue(button, &eepromValues->spanDistance, 0.1);
       break;
     case 3:
-      lcd.printrow(0, "Peg Dist. 1's");
-      lcd.printrow(1, String(eepromValues->pegDistance,1));
+      lcd->printrow(0, "Peg Dist. 1's");
+      lcd->printrow(1, String(eepromValues->pegDistance,1));
       changeValue(button, &eepromValues->pegDistance, 1.0);
       break;
     case 4:
-      lcd.printrow(0, "Peg Dist. .1's");
-      lcd.printrow(1, String(eepromValues->pegDistance,1));
+      lcd->printrow(0, "Peg Dist. .1's");
+      lcd->printrow(1, String(eepromValues->pegDistance,1));
       changeValue(button, &eepromValues->pegDistance, 0.1);
       break;
     // set units of measure
     case 5:
-      lcd.printrow(0, "Btn 1 g Btn 2 oz");
-      lcd.printrow(1, "Btn 3 = both");
+      lcd->printrow(0, "Btn 1 g Btn 2 oz");
+      lcd->printrow(1, "Btn 3 = both");
       switch (button)
       {
         case BUTTON1:
@@ -72,8 +72,8 @@ int OptionHandler::handle(int button, I2C_LCD lcd, HX711 *frontCell, HX711 *rear
       break;
       
     default:
-      lcd.printrow(0, "Saving values ...");
-      lcd.printrow(1, "");
+      lcd->printrow(0, "Saving values ...");
+      lcd->printrow(1, "");
       Eeprom::putValues(*eepromValues);
       delay(500);
       status = WAITING;

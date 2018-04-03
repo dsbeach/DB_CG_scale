@@ -1,6 +1,6 @@
-#include "DB_CG_scale.h"
+#include "DB_CG_scale-master.h"
 
-int MainHandler::handle(int button, I2C_LCD lcd, HX711 *frontCell, HX711 *rearCell, EepromValues *eepromValues) {
+int MainHandler::handle(int button, I2C_LCD *lcd, HX711 *frontCell, HX711 *rearCell, EepromValues *eepromValues) {
 
   static MovingAverage avgFront(CELL_SAMPLE_ITERATIONS);
   static MovingAverage avgRear(CELL_SAMPLE_ITERATIONS);
@@ -9,8 +9,8 @@ int MainHandler::handle(int button, I2C_LCD lcd, HX711 *frontCell, HX711 *rearCe
 
   if (status == WAITING)
   {
-    lcd.printrow(0, "Main is working");
-    lcd.printrow(1, "");
+    lcd->printrow(0, "Main is working");
+    lcd->printrow(1, "");
     status = WORKING;
   }
   switch (button)
@@ -59,11 +59,11 @@ int MainHandler::handle(int button, I2C_LCD lcd, HX711 *frontCell, HX711 *rearCe
   
   if (showGrams == true) // showing grams
   {
-    lcd.printrow(0, "Weight: " + String(totalWeight,0) + " g");
+    lcd->printrow(0, "Weight: " + String(totalWeight,0) + " g");
   } else {
-    lcd.printrow(0, "Weight: " + String((totalWeight * GRAMS_OUNCES_FACTOR), 1) + " oz");
+    lcd->printrow(0, "Weight: " + String((totalWeight * GRAMS_OUNCES_FACTOR), 1) + " oz");
   }
-  lcd.printrow(1, "CG: " + String(cg, 1) + " mm");
+  lcd->printrow(1, "CG: " + String(cg, 1) + " mm");
 
   return MAIN_ID;
 }

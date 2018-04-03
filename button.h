@@ -1,7 +1,7 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-#include "DB_CG_Scale.h"
+#include "DB_CG_scale-master.h"
 
 // button pins
 #define B1PIN 2

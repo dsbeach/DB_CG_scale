@@ -1,7 +1,7 @@
 #ifndef EEPROM_H
 #define EEPROM_H
 
-#include "DB_CG_scale.h"
+#include "DB_CG_scale-master.h"
 
 #define FRONT_SCALE_ADDRESS 0
 #define REAR_SCALE_ADDRESS 4
@@ -19,7 +19,7 @@ struct EepromValues {
   uint32_t gramsOuncesOption;
 };
 
-#include "DB_CG_scale.h"
+#include "DB_CG_scale-master.h"
 
 class Eeprom {
   private:
