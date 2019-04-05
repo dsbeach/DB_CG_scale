@@ -3,8 +3,8 @@
 #define DEBUG true
 
 I2C_LCD *lcd;
-HX711 frontCell(FRONT_CELL_DOUT, FRONT_CELL_SCK);  
-HX711 rearCell(REAR_CELL_DOUT, REAR_CELL_SCK); 
+HX711 frontCell;  
+HX711 rearCell; 
 int handlerIndex;
 MainHandler mainHandler;
 RawHandler rawHandler;
@@ -23,6 +23,10 @@ void setup() {
   }
 
   Wire.begin();
+
+  frontCell.begin(FRONT_CELL_DOUT, FRONT_CELL_SCK);
+  rearCell.begin(REAR_CELL_DOUT, REAR_CELL_SCK);
+  
   int lcdAddresses[2] = {0x27, 0x3f};
   for (int i = 0; i < (sizeof(lcdAddresses)/sizeof(int)); i++)
   {
@@ -74,8 +78,3 @@ void loop() {
 
   }
 }
-
-
-
-
-
